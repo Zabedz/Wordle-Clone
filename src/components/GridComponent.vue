@@ -4,6 +4,7 @@
       <div class="col-sm">
         <ul v-for="index in currentGuess" v-bind:key="index" class="list-group">
           <li class="list-group-item">{{ array1[index-1] }}</li>
+          <li v-bind:class="[booleanValue ? 'styling1' : 'styling2']">{{ array1[index-1] }}</li>
         </ul>
       </div>
       <div class="col-sm">
@@ -35,7 +36,9 @@
 export default {
   name: "GridComponent",
   data() {
-    return {}
+    return {
+      booleanValue : false
+    }
   },
   props: {
     currentGuess: Number,
@@ -48,8 +51,22 @@ export default {
     array3: String,
     array4: String,
     array5: String,
+
+    // Styling
+    greenStyle: '.list-group-item',
+    yellowStyle: '',
+    normalStyle: '',
   },
-  methods: {}
+  methods: {
+    getCellClass(){
+      return '.list-group-item'
+    }
+  },
+  watch:{
+    array1(oldVal, newVal){
+      return this.greenStyle;
+    }
+  }
 }
 </script>
 
@@ -73,11 +90,11 @@ export default {
 }
 
 .correct-position {
-
+  background-color: greenyellow;
 }
 
 .incorrect-position {
-
+  background-color: yellow;
 }
 
 </style>

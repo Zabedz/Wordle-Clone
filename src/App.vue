@@ -9,12 +9,10 @@
 
 <script>
 import BoardComponent from "@/components/BoardComponent";
-import InputComponent from "@/components/InputComponent";
 
 export default {
   name: 'App',
   components: {
-    InputComponent,
     BoardComponent,
   },
   data () {
