@@ -28,7 +28,6 @@ export default {
     },
     onSubmit(e) {
       e.preventDefault()
-      console.log("Guess submitted:", this.guess)
       if (this.guess.length !== 5){
         alert('Only 5 letter words are allowed')
         return this.clearInput()

@@ -11,7 +11,15 @@
         v-bind:array2=this.array2
         v-bind:array3=this.array3
         v-bind:array4=this.array4
-        v-bind:array5=this.array5>
+        v-bind:array5=this.array5
+
+        v-bind:css-array1=this.cssArray1
+        v-bind:css-array2=this.cssArray2
+        v-bind:css-array3=this.cssArray3
+        v-bind:css-array4=this.cssArray4
+        v-bind:css-array5=this.cssArray5
+
+    >
     </grid-component>
     <input-component
         v-on:guess-submitted="submitGuess">
@@ -43,11 +51,11 @@ export default {
       array5: '',
 
       // Map to contain letters and cell state
-      map1: new Map(),
-      map2: new Map(),
-      map3: new Map(),
-      map4: new Map(),
-      map5: new Map(),
+      cssArray1: [],
+      cssArray2: [],
+      cssArray3: [],
+      cssArray4: [],
+      cssArray5: [],
     }
   },
   components: {GridComponent, HeaderComponent, InputComponent},
@@ -70,9 +78,9 @@ export default {
     setHorizontalGuess(userGuess) {
       // Take 1 word of 5 length
       // Split its contents into 5 separate arrays into index based on current guess counter - 1
-      console.log("User guess in set horizontal guess method:", userGuess)
       console.log("Word to guess: ", this.wordToGuess)
-      console.log("Current guess: ", this.currentGuess)
+      console.log("Word guessed:", userGuess)
+      console.log("Current guess counter: ", this.currentGuess)
 
       console.log(typeof this.array1);
 
@@ -83,25 +91,39 @@ export default {
       this.array4 = this.array4 + userGuess[3]
       this.array5 = this.array5 + userGuess[4]
 
-      // Pass into map
+      // Create new entries
+      let letterObjectEntries = []
+      for (let i = 0; i < userGuess.length; i++) {
+        const letterToAdd = userGuess[i]
+        let styling = 'normal'; // Doesn't exist
+        if (userGuess[i] === this.wordToGuess[i]) { // Correct position
+          styling = 'green'
+        } else if (this.wordToGuess.includes(userGuess[i])) { // Exists but wrong position
+          styling = 'yellow'
+        }
+        const newEntry = {
+          'letter': letterToAdd,
+          'styling': styling
+        }
+        letterObjectEntries.push(newEntry)
+      }
 
-      console.log("Printing array-string content");
-      console.log(this.array1.toString());
-      console.log(this.array2.toString());
-      console.log(this.array3.toString());
-      console.log(this.array4.toString());
-      console.log(this.array5.toString());
+      //Add to cssArray
+      this.cssArray1 = [...this.cssArray1, letterObjectEntries[0]]
+      this.cssArray2 = [...this.cssArray2, letterObjectEntries[1]]
+      this.cssArray3 = [...this.cssArray3, letterObjectEntries[2]]
+      this.cssArray4 = [...this.cssArray4, letterObjectEntries[3]]
+      this.cssArray5 = [...this.cssArray5, letterObjectEntries[4]]
+
+      console.log("Printing cssArray entries:")
+      console.log("css1 ", JSON.stringify(this.cssArray1));
+      console.log("css2 ", JSON.stringify(this.cssArray2));
+      console.log("css3 ", JSON.stringify(this.cssArray3));
+      console.log("css4 ", JSON.stringify(this.cssArray4));
+      console.log("css5 ", JSON.stringify(this.cssArray5));
 
       this.currentGuess = this.currentGuess + 1;
 
-      for (let i = 0; i < 5; i++) {
-        console.log("Inside for loop to print array contents: ");
-        console.log(this.array1[i])
-        console.log(this.array2[i])
-        console.log(this.array3[i])
-        console.log(this.array4[i])
-        console.log(this.array5[i])
-      }
       this.checkAnswer(userGuess);
     },
     checkAnswer(userGuess) {

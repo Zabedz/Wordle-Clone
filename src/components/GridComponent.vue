@@ -3,28 +3,37 @@
     <div class="row">
       <div class="col-sm">
         <ul v-for="index in currentGuess" v-bind:key="index" class="list-group">
-<!--          <li class="list-group-item">{{ array1[index - 1] }}</li>-->
-          <li class="list-group-item" v-bind:class="getStyle('yellow')">{{ array1[index - 1] }}</li>
+          <li class="list-group-item" v-bind:class="getStyle(cssArray1[index - 1].styling)">
+            {{ cssArray1[index - 1].letter }}
+          </li>
         </ul>
       </div>
       <div class="col-sm">
         <ul v-for="index in currentGuess" v-bind:key="index" class="list-group">
-          <li class="list-group-item">{{ array2[index - 1] }}</li>
+          <li class="list-group-item" v-bind:class="getStyle(cssArray2[index - 1].styling)">
+            {{ cssArray2[index - 1].letter }}
+          </li>
         </ul>
       </div>
       <div class="col-sm">
         <ul v-for="index in currentGuess" v-bind:key="index" class="list-group">
-          <li class="list-group-item">{{ array3[index - 1] }}</li>
+          <li class="list-group-item" v-bind:class="getStyle(cssArray3[index - 1].styling)">
+            {{ cssArray3[index - 1].letter }}
+          </li>
         </ul>
       </div>
       <div class="col-sm">
         <ul v-for="index in currentGuess" v-bind:key="index" class="list-group">
-          <li class="list-group-item">{{ array4[index - 1] }}</li>
+          <li class="list-group-item" v-bind:class="getStyle(cssArray4[index - 1].styling)">
+            {{ cssArray4[index - 1].letter }}
+          </li>
         </ul>
       </div>
       <div class="col-sm">
         <ul v-for="index in currentGuess" v-bind:key="index" class="list-group">
-          <li class="list-group-item">{{ array5[index - 1] }}</li>
+          <li class="list-group-item" v-bind:class="getStyle(cssArray5[index - 1].styling)">
+            {{ cssArray5[index - 1].letter }}
+          </li>
         </ul>
       </div>
     </div>
@@ -52,15 +61,28 @@ export default {
     array4: String,
     array5: String,
 
-    // Contains letters and cell state
-    map1: new Map(),
-    map2: new Map(),
-    map3: new Map(),
-    map4: new Map(),
-    map5: new Map(),
+    // Array of objects to contain letters and cell state
+    // const arr: { name: string; salary: number }[] = [];
+    cssArray1: {
+      type: Array
+    },
+    cssArray2: {
+      type: Array
+    },
+    cssArray3: {
+      type: Array
+    },
+    cssArray4: {
+      type: Array
+    },
+    cssArray5: {
+      type: Array
+    },
+
   },
   methods: {
     getStyle(condition) {
+      console.log("Style condition: " , condition)
       switch (condition) {
         case 'yellow':
           return 'incorrect-position'
@@ -95,7 +117,6 @@ export default {
 
 .correct-position {
   background-color: greenyellow;
-  font-size: xx-large;
 }
 
 .incorrect-position {
