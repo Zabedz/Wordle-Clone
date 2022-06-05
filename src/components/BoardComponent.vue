@@ -11,8 +11,7 @@
         v-bind:array2=this.array2
         v-bind:array3=this.array3
         v-bind:array4=this.array4
-        v-bind:array5=this.array5
-    >
+        v-bind:array5=this.array5>
     </grid-component>
     <input-component
         v-on:guess-submitted="submitGuess">
@@ -42,6 +41,13 @@ export default {
       array3: '',
       array4: '',
       array5: '',
+
+      // Map to contain letters and cell state
+      map1: new Map(),
+      map2: new Map(),
+      map3: new Map(),
+      map4: new Map(),
+      map5: new Map(),
     }
   },
   components: {GridComponent, HeaderComponent, InputComponent},
@@ -65,15 +71,19 @@ export default {
       // Take 1 word of 5 length
       // Split its contents into 5 separate arrays into index based on current guess counter - 1
       console.log("User guess in set horizontal guess method:", userGuess)
+      console.log("Word to guess: ", this.wordToGuess)
       console.log("Current guess: ", this.currentGuess)
 
       console.log(typeof this.array1);
 
+      // Pass into array
       this.array1 = this.array1 + userGuess[0]
       this.array2 = this.array2 + userGuess[1]
       this.array3 = this.array3 + userGuess[2]
       this.array4 = this.array4 + userGuess[3]
       this.array5 = this.array5 + userGuess[4]
+
+      // Pass into map
 
       console.log("Printing array-string content");
       console.log(this.array1.toString());
@@ -84,7 +94,7 @@ export default {
 
       this.currentGuess = this.currentGuess + 1;
 
-      for (let i = 0; i < 5; i++){
+      for (let i = 0; i < 5; i++) {
         console.log("Inside for loop to print array contents: ");
         console.log(this.array1[i])
         console.log(this.array2[i])
@@ -92,6 +102,25 @@ export default {
         console.log(this.array4[i])
         console.log(this.array5[i])
       }
+      this.checkAnswer(userGuess);
+    },
+    checkAnswer(userGuess) {
+      if (userGuess === this.wordToGuess) {
+        this.resetBoard()
+        return alert("You got it!")
+      }
+    },
+    resetBoard() {
+      this.currentGuess = 0;
+      this.totalGuesses = 6;
+      this.guessLength = 5;
+
+
+      this.array1 = '';
+      this.array2 = '';
+      this.array3 = '';
+      this.array4 = '';
+      this.array5 = '';
     }
   }
 }

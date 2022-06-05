@@ -1,8 +1,7 @@
 <template>
   <div class="container">
     <board-component
-      v-bind:wordToGuess = wordToGuess
-    >
+      v-bind:wordToGuess = wordToGuess>
     </board-component>
   </div>
 </template>
@@ -17,7 +16,7 @@ export default {
   },
   data () {
     return {
-      wordToGuess: 'Hello'
+      wordToGuess: 'Hello'.toUpperCase()
     }
   }
 }

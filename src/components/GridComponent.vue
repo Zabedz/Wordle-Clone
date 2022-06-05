@@ -3,28 +3,28 @@
     <div class="row">
       <div class="col-sm">
         <ul v-for="index in currentGuess" v-bind:key="index" class="list-group">
-          <li class="list-group-item">{{ array1[index-1] }}</li>
-          <li v-bind:class="[booleanValue ? 'styling1' : 'styling2']">{{ array1[index-1] }}</li>
+<!--          <li class="list-group-item">{{ array1[index - 1] }}</li>-->
+          <li class="list-group-item" v-bind:class="getStyle('yellow')">{{ array1[index - 1] }}</li>
         </ul>
       </div>
       <div class="col-sm">
         <ul v-for="index in currentGuess" v-bind:key="index" class="list-group">
-          <li class="list-group-item">{{ array2[index-1] }}</li>
+          <li class="list-group-item">{{ array2[index - 1] }}</li>
         </ul>
       </div>
       <div class="col-sm">
         <ul v-for="index in currentGuess" v-bind:key="index" class="list-group">
-          <li class="list-group-item">{{ array3[index-1] }}</li>
+          <li class="list-group-item">{{ array3[index - 1] }}</li>
         </ul>
       </div>
       <div class="col-sm">
         <ul v-for="index in currentGuess" v-bind:key="index" class="list-group">
-          <li class="list-group-item">{{ array4[index-1] }}</li>
+          <li class="list-group-item">{{ array4[index - 1] }}</li>
         </ul>
       </div>
       <div class="col-sm">
         <ul v-for="index in currentGuess" v-bind:key="index" class="list-group">
-          <li class="list-group-item">{{ array5[index-1] }}</li>
+          <li class="list-group-item">{{ array5[index - 1] }}</li>
         </ul>
       </div>
     </div>
@@ -37,7 +37,7 @@ export default {
   name: "GridComponent",
   data() {
     return {
-      booleanValue : false
+      booleanValue: false
     }
   },
   props: {
@@ -52,19 +52,23 @@ export default {
     array4: String,
     array5: String,
 
-    // Styling
-    greenStyle: '.list-group-item',
-    yellowStyle: '',
-    normalStyle: '',
+    // Contains letters and cell state
+    map1: new Map(),
+    map2: new Map(),
+    map3: new Map(),
+    map4: new Map(),
+    map5: new Map(),
   },
   methods: {
-    getCellClass(){
-      return '.list-group-item'
-    }
-  },
-  watch:{
-    array1(oldVal, newVal){
-      return this.greenStyle;
+    getStyle(condition) {
+      switch (condition) {
+        case 'yellow':
+          return 'incorrect-position'
+        case 'green':
+          return 'correct-position'
+        default:
+          return ''
+      }
     }
   }
 }
@@ -91,6 +95,7 @@ export default {
 
 .correct-position {
   background-color: greenyellow;
+  font-size: xx-large;
 }
 
 .incorrect-position {
