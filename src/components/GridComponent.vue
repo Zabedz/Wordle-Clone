@@ -53,6 +53,7 @@ export default {
     currentGuess: Number,
     wordToGuess: String,
     userGuess: String,
+    correctAnswer : Boolean,
 
     // Horizontal arrays for guesses
     array1: String,
@@ -92,7 +93,17 @@ export default {
           return ''
       }
     }
-  }
+  },
+  mounted(){
+    this.$nextTick(()=>{
+      console.log("Inside next tick")
+      if (this.correctAnswer){
+        console.log("Correct answer")
+        alert('You got it!')
+        this.$emit('reset-board');
+      }
+    })
+  },
 }
 </script>
 
