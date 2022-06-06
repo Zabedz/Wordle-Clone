@@ -1,18 +1,25 @@
 <template>
   <div class="container">
+    <header-component>
+    </header-component>
     <board-component
       v-bind:wordToGuess = wordToGuess>
     </board-component>
+    <footer-component>
+    </footer-component>
   </div>
 </template>
 
 <script>
 import BoardComponent from "@/components/BoardComponent";
-
+import HeaderComponent from "@/components/HeaderComponent";
+import FooterComponent from "@/components/FooterComponent";
 export default {
   name: 'App',
   components: {
     BoardComponent,
+    HeaderComponent,
+    FooterComponent
   },
   data () {
     return {

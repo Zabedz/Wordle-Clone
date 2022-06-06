@@ -3,7 +3,7 @@
     <div class="input-group-prepend">
     </div>
     <form v-on:submit="onSubmit" class="form-control">
-      <input v-model="guess"
+      <input v-model="userGuess"
              name="guessInput"
              type="text"
              class="form-control"
@@ -19,7 +19,8 @@ export default {
   name: "InputComponent",
   data() {
     return {
-      guess: ''
+      userGuess: '',
+      guessLength : 5
     }
   },
   methods: {
@@ -28,16 +29,16 @@ export default {
     },
     onSubmit(e) {
       e.preventDefault()
-      if (this.guess.length !== 5){
+      if (this.userGuess.length !== this.guessLength){
         alert('Only 5 letter words are allowed')
         return this.clearInput()
       }
-      this.guess = this.guess.toUpperCase();
-      this.emitGuess(this.guess)
+      this.userGuess = this.userGuess.toUpperCase();
+      this.emitGuess(this.userGuess)
       this.clearInput()
     },
     clearInput() {
-      this.guess = ''
+      this.userGuess = ''
     }
   }
 }
