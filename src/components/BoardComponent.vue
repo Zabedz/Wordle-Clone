@@ -94,29 +94,50 @@ export default {
     },
     setArrays(userGuess) {
       let letterCountSet = this.getLetterCount(this.wordToGuess);
-      const letterObjectEntries = []
+      let letterObjectEntries = []
 
+      letterObjectEntries = this.checkGreen(letterObjectEntries, userGuess, letterCountSet);
+      letterObjectEntries = this.checkYellow(letterObjectEntries, userGuess, letterCountSet);
+      return letterObjectEntries;
+    },
+    checkGreen(letterObjectEntries, userGuess, letterCountSet) {
+      console.log("Checking green");
       for (let i = 0; i < userGuess.length; i++) {
-        const letterToAdd = userGuess[i] // == H
-
-        let styling = 'normal'; // Doesn't exist
-        if (letterToAdd === this.wordToGuess[i]) { // Correct position
-
-          if (letterCountSet[`${letterToAdd}`] > 0) {
-            styling = 'green'
+        const letterToAdd = userGuess[i];
+        if (letterToAdd === this.wordToGuess[i]) { //If in the right place
+          if (letterCountSet[`${letterToAdd}`] > 0) { //If not exhausted
             letterCountSet[`${letterToAdd}`] = letterCountSet[`${letterToAdd}`] - 1;
-          }
-        } else if (this.wordToGuess.includes(letterToAdd)) { // Exists but wrong position
-          if (letterCountSet[`${letterToAdd}`] > 0) {
-            styling = 'yellow'
-            letterCountSet[`${letterToAdd}`] = letterCountSet[`${letterToAdd}`] - 1;
+            const newEntry = {
+              'letter': letterToAdd,
+              'styling': 'green'
+            }
+            letterObjectEntries[i] = newEntry;
           }
         }
-        const newEntry = {
-          'letter': letterToAdd,
-          'styling': styling
+      }
+      return letterObjectEntries;
+    },
+    checkYellow(letterObjectEntries, userGuess, letterCountSet) {
+      for (let i = 0; i < userGuess.length; i++) {
+        const letterToAdd = userGuess[i];
+        if (letterCountSet[`${letterToAdd}`] > 0) { //If not exhausted
+          if (this.wordToGuess.includes(letterToAdd)) { //If word contains the letter
+            letterCountSet[`${letterToAdd}`] = letterCountSet[`${letterToAdd}`] - 1;
+            const newEntry = {
+              'letter': letterToAdd,
+              'styling': 'yellow'
+            }
+            letterObjectEntries[i] = newEntry;
+            continue;
+          }
         }
-        letterObjectEntries.push(newEntry)
+        if (!letterObjectEntries[i]) {
+          const newEntry = {
+            'letter': letterToAdd,
+            'styling': 'normal'
+          }
+          letterObjectEntries[i] = newEntry;
+        }
       }
       return letterObjectEntries;
     },
