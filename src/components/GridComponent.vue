@@ -75,7 +75,6 @@ export default {
   },
   methods: {
     getStyle(condition) {
-      console.log("Style condition: " , condition)
       switch (condition) {
         case 'yellow':
           return 'incorrect-position'

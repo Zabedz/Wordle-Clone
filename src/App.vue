@@ -3,7 +3,8 @@
     <header-component>
     </header-component>
     <board-component
-      v-bind:wordToGuess = wordToGuess>
+        v-bind:wordToGuess=wordToGuess
+        v-on:get-word="getWord">
     </board-component>
     <footer-component>
     </footer-component>
@@ -14,6 +15,7 @@
 import BoardComponent from "@/components/BoardComponent";
 import HeaderComponent from "@/components/HeaderComponent";
 import FooterComponent from "@/components/FooterComponent";
+
 export default {
   name: 'App',
   components: {
@@ -21,10 +23,23 @@ export default {
     HeaderComponent,
     FooterComponent
   },
-  data () {
+  data() {
     return {
-      wordToGuess: 'Hello'.toUpperCase()
+      wordToGuess: ''
     }
+  },
+  methods: {
+    async getWord() {
+      const endPoint = "https://random-word-api.herokuapp.com/word?length=5";
+      const res = await fetch(endPoint);
+      const word = await res.json();
+
+      this.wordToGuess = word[0].toUpperCase();
+      console.log("New wordToGuess: ", this.wordToGuess);
+    },
+  },
+  created () {
+    this.getWord();
   }
 }
 </script>

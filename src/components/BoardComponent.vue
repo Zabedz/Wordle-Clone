@@ -94,8 +94,8 @@ export default {
       }
     },
     resetBoard() {
-      console.log("Reset board invoked")
       this.correctAnswer = false;
+      this.getWord();
 
       this.currentGuess = 0;
       this.totalGuesses = 6;
@@ -106,8 +106,11 @@ export default {
       this.cssArray3 = [];
       this.cssArray4 = [];
       this.cssArray5 = [];
+    },
+    getWord() {
+      this.$emit('get-word');
     }
-  },
+  }
 }
 </script>
 

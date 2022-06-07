@@ -17,7 +17,6 @@ export default {
     }
   }, methods: {
     onSubmit() {
-      console.log("On reset game");
       this.$emit('reset-game');
     }
   }
