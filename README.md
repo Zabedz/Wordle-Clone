@@ -1,6 +1,8 @@
 # Wordle Clone
 
-Over a boring weekend, I'd decided to learn a new JS Web Framework and I'd landed on [Vue js](https://vuejs.org/) and with my clear lack of creativity, decided on something simple to get up and going and landed on making a [Wordle](https://www.nytimes.com/games/wordle/index.html) clone.
+Over a boring weekend, I'd decided to learn a new JS Web Framework and I'd landed on [Vue js](https://vuejs.org/) and with my clear lack of creativity, decided on something simple to get up and going and landed on making a [Wordle](https://www.nytimes.com/games/wordle/index.html) clone. 
+
+I apologise for the dog water code in advance, this is my first forray into a Web Frontend stack.   
 
 ## Project setup
 ```
