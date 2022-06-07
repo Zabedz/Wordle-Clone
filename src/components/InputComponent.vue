@@ -4,9 +4,10 @@
     </div>
     <form v-on:submit="onSubmit" class="form-control">
       <input v-model="userGuess"
+             :disabled="disabled"
              name="guessInput"
              type="text"
-             class="form-control"
+             class="form-control input-field"
              aria-describedby="inputGroup-sizing-lg">
     </form>
   </div>
@@ -21,6 +22,9 @@ export default {
       userGuess: '',
       guessLength : 5
     }
+  },
+  props: {
+    disabled: Boolean
   },
   methods: {
     emitGuess(guess) {
@@ -45,4 +49,8 @@ export default {
 
 <style scoped>
 
+.input-field {
+  border-width: 0px;
+  border-color: transparent;
+}
 </style>

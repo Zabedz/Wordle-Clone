@@ -12,12 +12,16 @@
         v-bind:css-array5=this.cssArray5
 
         v-bind:correctAnswer=this.correctAnswer
-        v-on:reset-board=resetBoard
     >
     </grid-component>
     <input-component
-        v-on:guess-submitted="submitGuess">
+        v-on:guess-submitted="submitGuess"
+        v-bind:disabled=correctAnswer>
     </input-component>
+    <reset-game-button-component
+        v-bind:show-button=this.correctAnswer
+        v-on:reset-game=resetBoard>
+    </reset-game-button-component>
   </div>
 </template>
 
@@ -25,6 +29,7 @@
 import HeaderComponent from "@/components/HeaderComponent";
 import GridComponent from "@/components/GridComponent";
 import InputComponent from '@/components/InputComponent';
+import ResetGameButtonComponent from "@/components/ResetGameButtonComponent";
 
 export default {
   name: "BoardComponent",
@@ -44,7 +49,7 @@ export default {
       cssArray5: [],
     }
   },
-  components: {GridComponent, HeaderComponent, InputComponent},
+  components: {ResetGameButtonComponent, GridComponent, HeaderComponent, InputComponent},
   props: {
     wordToGuess: String,
   },
@@ -83,7 +88,7 @@ export default {
       this.currentGuess = this.currentGuess + 1;
       this.checkAnswer(userGuess);
     },
-    checkAnswer(userGuess) {
+    async checkAnswer(userGuess) {
       if (userGuess === this.wordToGuess) {
         this.correctAnswer = true;
       }
@@ -102,7 +107,7 @@ export default {
       this.cssArray4 = [];
       this.cssArray5 = [];
     }
-  }
+  },
 }
 </script>
 

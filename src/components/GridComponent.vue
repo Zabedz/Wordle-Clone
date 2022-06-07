@@ -55,15 +55,7 @@ export default {
     userGuess: String,
     correctAnswer : Boolean,
 
-    // Horizontal arrays for guesses
-    array1: String,
-    array2: String,
-    array3: String,
-    array4: String,
-    array5: String,
-
     // Array of objects to contain letters and cell state
-    // const arr: { name: string; salary: number }[] = [];
     cssArray1: {
       type: Array
     },
@@ -93,16 +85,6 @@ export default {
           return ''
       }
     }
-  },
-  mounted(){
-    this.$nextTick(()=>{
-      console.log("Inside next tick")
-      if (this.correctAnswer){
-        console.log("Correct answer")
-        alert('You got it!')
-        this.$emit('reset-board');
-      }
-    })
   },
 }
 </script>
