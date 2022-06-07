@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "ResetGameButtonComponent",
+  name: "ResetGameComponent",
   props: {
     showButton: {
       type: Boolean,
@@ -25,7 +25,4 @@ export default {
 
 <style scoped>
 
-.container {
-  padding: 20px;
-}
 </style>

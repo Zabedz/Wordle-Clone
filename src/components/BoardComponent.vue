@@ -20,7 +20,7 @@
     </input-component>
     <reset-game-button-component
         v-bind:show-button=this.correctAnswer
-        v-on:reset-game=resetBoard>
+        v-on:reset-game="resetBoard">
     </reset-game-button-component>
   </div>
 </template>
@@ -29,7 +29,7 @@
 import HeaderComponent from "@/components/HeaderComponent";
 import GridComponent from "@/components/GridComponent";
 import InputComponent from '@/components/InputComponent';
-import ResetGameButtonComponent from "@/components/ResetGameButtonComponent";
+import ResetGameComponent from "@/components/ResetGameComponent";
 
 export default {
   name: "BoardComponent",
@@ -49,7 +49,7 @@ export default {
       cssArray5: [],
     }
   },
-  components: {ResetGameButtonComponent, GridComponent, HeaderComponent, InputComponent},
+  components: {ResetGameButtonComponent: ResetGameComponent, GridComponent, HeaderComponent, InputComponent},
   props: {
     wordToGuess: String,
   },
@@ -58,25 +58,12 @@ export default {
       this.userGuess = userGuess
       this.setHorizontalGuess(userGuess)
     },
+
     setHorizontalGuess(userGuess) {
       if (this.currentGuess >= this.totalGuesses) {
         return alert("You're out of guesses.")
       }
-      const letterObjectEntries = []
-      for (let i = 0; i < userGuess.length; i++) {
-        const letterToAdd = userGuess[i]
-        let styling = 'normal'; // Doesn't exist
-        if (userGuess[i] === this.wordToGuess[i]) { // Correct position
-          styling = 'green'
-        } else if (this.wordToGuess.includes(userGuess[i])) { // Exists but wrong position
-          styling = 'yellow'
-        }
-        const newEntry = {
-          'letter': letterToAdd,
-          'styling': styling
-        }
-        letterObjectEntries.push(newEntry)
-      }
+      const letterObjectEntries = this.setArrays(userGuess);
 
       // Add letters and styling to props that get passed to Grid
       this.cssArray1 = [...this.cssArray1, letterObjectEntries[0]]
@@ -91,11 +78,50 @@ export default {
     async checkAnswer(userGuess) {
       if (userGuess === this.wordToGuess) {
         this.correctAnswer = true;
+        this.getNewWord();
       }
+    },
+    getLetterCount(userGuess) {
+      let countObject = {};
+      for (let char of userGuess) {
+        if (!countObject[char] && char !== ' ') {
+          countObject[char] = 1;
+        } else if (char !== ' ') {
+          countObject[char] = countObject[char] + 1;
+        }
+      }
+      return countObject;
+    },
+    setArrays(userGuess) {
+      let letterCountSet = this.getLetterCount(this.wordToGuess);
+      const letterObjectEntries = []
+
+      for (let i = 0; i < userGuess.length; i++) {
+        const letterToAdd = userGuess[i] // == H
+
+        let styling = 'normal'; // Doesn't exist
+        if (letterToAdd === this.wordToGuess[i]) { // Correct position
+
+          if (letterCountSet[`${letterToAdd}`] > 0) {
+            styling = 'green'
+            letterCountSet[`${letterToAdd}`] = letterCountSet[`${letterToAdd}`] - 1;
+          }
+        } else if (this.wordToGuess.includes(letterToAdd)) { // Exists but wrong position
+          if (letterCountSet[`${letterToAdd}`] > 0) {
+            styling = 'yellow'
+            letterCountSet[`${letterToAdd}`] = letterCountSet[`${letterToAdd}`] - 1;
+          }
+        }
+        const newEntry = {
+          'letter': letterToAdd,
+          'styling': styling
+        }
+        letterObjectEntries.push(newEntry)
+      }
+      return letterObjectEntries;
     },
     resetBoard() {
       this.correctAnswer = false;
-      this.getWord();
 
       this.currentGuess = 0;
       this.totalGuesses = 6;
@@ -107,9 +133,9 @@ export default {
       this.cssArray4 = [];
       this.cssArray5 = [];
     },
-    getWord() {
+    getNewWord() {
       this.$emit('get-word');
-    }
+    },
   }
 }
 </script>

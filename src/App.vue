@@ -35,7 +35,6 @@ export default {
       const word = await res.json();
 
       this.wordToGuess = word[0].toUpperCase();
-      console.log("New wordToGuess: ", this.wordToGuess);
     },
   },
   created () {
