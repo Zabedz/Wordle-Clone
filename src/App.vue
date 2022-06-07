@@ -38,8 +38,7 @@ export default {
     },
   },
   created () {
-    this.wordToGuess = 'HELLO';
-    // this.getWord();
+    this.getWord();
   }
 }
 </script>
